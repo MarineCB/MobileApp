@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LifeQuality</string>
+    <string name="app_name">Life Quality</string>
     <string name="searchEditText">Enter the name of a city : </string>
     <string name="search_result_info">Sorry, there is no such city...</string>
 

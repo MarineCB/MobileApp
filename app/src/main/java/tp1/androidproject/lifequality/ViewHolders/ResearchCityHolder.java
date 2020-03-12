@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import tp1.androidproject.lifequality.LocationActivity;
+import tp1.androidproject.lifequality.CityActivity;
 import tp1.androidproject.lifequality.R;
 import tp1.androidproject.lifequality.Model.SearchResult;
 
@@ -48,7 +48,7 @@ public class ResearchCityHolder extends GenericViewHolder<SearchResult> {
         this.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cityDetailsAct = new Intent(context, LocationActivity.class);
+                Intent cityDetailsAct = new Intent(context, CityActivity.class);
                 cityDetailsAct.putExtra("chosenCityUrl",item.getUrlCity());
                 cityDetailsAct.putExtra("chosenCityImg",imageUrl);
                 startActivity(context,cityDetailsAct,null);

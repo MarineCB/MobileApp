@@ -1,8 +1,10 @@
 package tp1.androidproject.lifequality.Model;
 
+import com.orm.SugarRecord;
+
 import java.util.ArrayList;
 
-public class UrbanArea {
+public class UrbanArea extends SugarRecord<UrbanArea> {
     // https://api.teleport.org/api/urban_areas/slug:paris/
     private String url;
     private String name;
