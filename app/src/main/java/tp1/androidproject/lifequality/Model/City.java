@@ -2,9 +2,9 @@ package tp1.androidproject.lifequality.Model;
 
 import android.util.Pair;
 
-import tp1.androidproject.lifequality.Model.UrbanArea;
+import com.orm.SugarRecord;
 
-public class Location {
+public class City extends SugarRecord<City> {
     private String locationUrl;
     private String name;
     private Pair<String,String> adminDivision;
@@ -13,9 +13,11 @@ public class Location {
     private String timezone;
     private UrbanArea urbanArea;
 
-    public Location(String url){
+    public City(String url){
         this.locationUrl = url;
     }
+
+    public City(){ }
 
     public String getName() {
         return name;
@@ -51,6 +53,10 @@ public class Location {
 
     public String getLocationUrl() {
         return locationUrl;
+    }
+
+    public void setLocationUrl(String locationUrl) {
+        this.locationUrl = locationUrl;
     }
 
     public String getTimezone() {

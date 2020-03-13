@@ -7,29 +7,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
-import tp1.androidproject.lifequality.Model.Location;
+import tp1.androidproject.lifequality.Model.City;
 import tp1.androidproject.lifequality.Model.UrbanArea;
 
-public class LocationActivity extends AppCompatActivity {
-    private Location location;
+public class CityActivity extends AppCompatActivity {
+    private City city;
     private VolleyController controller;
     private TextView cityNameTv;
     private TextView populationTv;
     private TextView countryTv;
     private TextView adminDivTv;
     private TextView timezoneTv;
+    private LikeButton likeButton;
 
     private boolean hasUrbanArea = false;
 
@@ -38,17 +41,23 @@ public class LocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
 
+        BottomNavigationBar bar = BottomNavigationBar.getInstance(this);
+
         CircleImageView cityImg = findViewById(R.id.city_img);
         cityNameTv = findViewById(R.id.city_fullname);
         populationTv = findViewById(R.id.mayor_ua_tv);
         countryTv = findViewById(R.id.fullname_ua_tv);
         adminDivTv = findViewById(R.id.continent_ua_tv);
         timezoneTv = findViewById(R.id.timezone_tv);
+        likeButton = findViewById(R.id.heart_button);
 
-        controller = VolleyController.getInstance(getApplicationContext());
+        Initialize();
+
+
 
         Intent intent = getIntent();
-        location = new Location(intent.getStringExtra("chosenCityUrl"));
+        city = new City();
+        city.setLocationUrl(intent.getStringExtra("chosenCityUrl"));
 
         String imgUrl = intent.getStringExtra("chosenCityImg");
         if(imgUrl ==  null || imgUrl.equals(""))
@@ -59,33 +68,52 @@ public class LocationActivity extends AppCompatActivity {
         startRequest();
     }
 
+
+    public void Initialize(){
+        likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                city.save();
+                Toast.makeText(getApplicationContext(),"Saved",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                city.delete();
+                Toast.makeText(getApplicationContext(),"Deleted",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        controller = VolleyController.getInstance(getApplicationContext());
+    }
+
     private void startRequest () {
         new Thread(){public void run() {
 
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, location.getLocationUrl(), null,
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, city.getLocationUrl(), null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                location.setPopulation(String.valueOf(response.getInt("population")));
+                                city.setPopulation(String.valueOf(response.getInt("population")));
 
-                                location.setName(response.getString("name"));
+                                city.setName(response.getString("name"));
                                 response = response.getJSONObject("_links");
 
                                 JSONObject values = response.getJSONObject("city:admin1_division");
-                                location.setAdminDivision(values.getString("name"), values.getString("href"));
+                                city.setAdminDivision(values.getString("name"), values.getString("href"));
 
                                 values = response.getJSONObject("city:country");
-                                location.setCountry(values.getString("name"), values.getString("href"));
+                                city.setCountry(values.getString("name"), values.getString("href"));
 
                                 values = response.getJSONObject("city:timezone");
-                                location.setTimezone(values.getString("name"));
+                                city.setTimezone(values.getString("name"));
 
                                 if (response.has("city:urban_area")) {
                                     hasUrbanArea = true;
                                     JSONObject ua = response.getJSONObject("city:urban_area");
                                     if (ua != null)
-                                        location.setUrbanArea(new UrbanArea(ua.getString("href")));
+                                        city.setUrbanArea(new UrbanArea(ua.getString("href")));
                                 }
 
                             } catch (JSONException e) {
@@ -106,18 +134,25 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     private void DisplayInfo(){
-        populationTv.setText(location.getPopulation());
-        cityNameTv.setText(location.getName());
-        countryTv.setText(location.getCountry());
-        adminDivTv.setText(location.getAdminDivision());
-        timezoneTv.setText(location.getTimezone());
+        populationTv.setText(city.getPopulation());
+        cityNameTv.setText(city.getName());
+        countryTv.setText(city.getCountry());
+        adminDivTv.setText(city.getAdminDivision());
+        timezoneTv.setText(city.getTimezone());
+
         if (hasUrbanArea)
             findViewById(R.id.ua_act_button).setVisibility(View.VISIBLE);
+
+        List<City> citiesResult = City.find(City.class, "location_url = ?", city.getLocationUrl());
+        if (citiesResult !=null && citiesResult.size() > 0)
+            likeButton.setLiked(true);
+        else
+            likeButton.setLiked(false);
     }
 
     public void LaunchUrbanActivity(View v) {
         Intent urbanAreaAct = new Intent(getApplicationContext(), UrbanAreaActivity.class);
-        urbanAreaAct.putExtra("urbanAreaUrl", location.getUrbanArea().getUrl());
+        urbanAreaAct.putExtra("urbanAreaUrl", city.getUrbanArea().getUrl());
         startActivity(urbanAreaAct);
     }
 }

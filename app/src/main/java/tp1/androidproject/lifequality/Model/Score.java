@@ -1,6 +1,8 @@
 package tp1.androidproject.lifequality.Model;
 
-public class Score {
+import com.orm.SugarRecord;
+
+public class Score extends SugarRecord<Score> {
     private String categoryName;
     private Float rating;
 

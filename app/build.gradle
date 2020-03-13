@@ -39,4 +39,7 @@ dependencies {
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
 
     implementation 'org.decimal4j:decimal4j:1.0.3'
+
+    implementation 'com.github.satyan:sugar:1.3'
+
 }
