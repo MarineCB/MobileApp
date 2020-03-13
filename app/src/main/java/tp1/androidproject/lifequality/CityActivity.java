@@ -2,6 +2,7 @@ package tp1.androidproject.lifequality;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import com.like.OnLikeListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +28,8 @@ import tp1.androidproject.lifequality.Model.City;
 import tp1.androidproject.lifequality.Model.UrbanArea;
 
 public class CityActivity extends AppCompatActivity {
-    private City city;
+    private WeakReference<City> cityRef;
+    private City cityObj;
     private VolleyController controller;
     private TextView cityNameTv;
     private TextView populationTv;
@@ -40,9 +44,8 @@ public class CityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
-
         BottomNavigationBar bar = BottomNavigationBar.getInstance(this);
-
+       // City.deleteAll(City.class);
         CircleImageView cityImg = findViewById(R.id.city_img);
         cityNameTv = findViewById(R.id.city_fullname);
         populationTv = findViewById(R.id.mayor_ua_tv);
@@ -51,13 +54,12 @@ public class CityActivity extends AppCompatActivity {
         timezoneTv = findViewById(R.id.timezone_tv);
         likeButton = findViewById(R.id.heart_button);
 
-        Initialize();
-
-
-
         Intent intent = getIntent();
-        city = new City();
-        city.setLocationUrl(intent.getStringExtra("chosenCityUrl"));
+        cityObj = new City();
+        cityObj.setLocationUrl(intent.getStringExtra("chosenCityUrl"));
+        this.cityRef = new WeakReference<>(cityObj);
+
+        Initialize();
 
         String imgUrl = intent.getStringExtra("chosenCityImg");
         if(imgUrl ==  null || imgUrl.equals(""))
@@ -73,14 +75,23 @@ public class CityActivity extends AppCompatActivity {
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                city.save();
+                cityRef.get().save();
                 Toast.makeText(getApplicationContext(),"Saved",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                city.delete();
-                Toast.makeText(getApplicationContext(),"Deleted",Toast.LENGTH_SHORT).show();
+                City city = cityRef.get();
+
+                ArrayList<City> savedCities = City.getAllSavedCities();
+                if(savedCities != null && savedCities.size() >0){
+                    for(City c : savedCities){
+                        if(c.equals(city)){
+                            c.delete();
+                            Toast.makeText(getApplicationContext(),"Deleted",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
             }
         });
 
@@ -89,12 +100,16 @@ public class CityActivity extends AppCompatActivity {
 
     private void startRequest () {
         new Thread(){public void run() {
+            final City city = cityRef.get();
 
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, city.getLocationUrl(), null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                if (city == null)
+                                    return;
+
                                 city.setPopulation(String.valueOf(response.getInt("population")));
 
                                 city.setName(response.getString("name"));
@@ -119,7 +134,7 @@ public class CityActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }finally {
-                                DisplayInfo();
+                                DisplayInfo(city);
                             }
                         }
                     },
@@ -133,7 +148,7 @@ public class CityActivity extends AppCompatActivity {
         }}.run();
     }
 
-    private void DisplayInfo(){
+    private void DisplayInfo(City city){
         populationTv.setText(city.getPopulation());
         cityNameTv.setText(city.getName());
         countryTv.setText(city.getCountry());
@@ -152,7 +167,7 @@ public class CityActivity extends AppCompatActivity {
 
     public void LaunchUrbanActivity(View v) {
         Intent urbanAreaAct = new Intent(getApplicationContext(), UrbanAreaActivity.class);
-        urbanAreaAct.putExtra("urbanAreaUrl", city.getUrbanArea().getUrl());
+        urbanAreaAct.putExtra("urbanAreaUrl", cityRef.get().getUrbanArea().getUrl());
         startActivity(urbanAreaAct);
     }
 }

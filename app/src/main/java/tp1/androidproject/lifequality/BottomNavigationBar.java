@@ -1,6 +1,7 @@
 package tp1.androidproject.lifequality;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ public class BottomNavigationBar {
                         return true;
                     case R.id.favorite:
                         Toast.makeText(act.getApplicationContext(),"Favorites selected",Toast.LENGTH_SHORT).show();
+                        Intent favoriteAct = new Intent(act.getApplicationContext(), FavoritesActivity.class);
+                        act.getApplicationContext().startActivity(favoriteAct);
                         return true;
                 }
                 return false;

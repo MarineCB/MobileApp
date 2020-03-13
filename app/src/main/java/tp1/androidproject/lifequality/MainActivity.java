@@ -10,18 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView citiesList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        citiesList = findViewById(R.id.places_list_rv);
+        RecyclerView citiesList = findViewById(R.id.places_list_rv);
 
-        init();
+        init(citiesList);
     }
 
-    private void init(){
+    private void init(final RecyclerView citiesList){
         SearchView searchArea = findViewById(R.id.location_search);
         searchArea.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

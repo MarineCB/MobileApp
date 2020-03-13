@@ -1,8 +1,13 @@
 package tp1.androidproject.lifequality.Model;
 
+import android.util.Log;
 import android.util.Pair;
 
 import com.orm.SugarRecord;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class City extends SugarRecord<City> {
     private String locationUrl;
@@ -73,5 +78,25 @@ public class City extends SugarRecord<City> {
 
     public void setUrbanArea(UrbanArea urbanArea) {
         this.urbanArea = urbanArea;
+    }
+
+    public static ArrayList<City> getAllSavedCities(){
+        Iterator<City> iterator = City.findAll(City.class);
+        ArrayList<City> temp = new ArrayList<>();
+        while (iterator.hasNext()) {
+            temp.add(iterator.next());
+        }
+        Log.i("Favorite", temp.toString());
+        return temp;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(!(obj instanceof City))
+            return false;
+
+        if(((City) obj).getLocationUrl().equals(this.getLocationUrl()))
+            return true;
+        else return false;
     }
 }
