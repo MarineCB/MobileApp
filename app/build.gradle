@@ -25,21 +25,21 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     implementation 'com.android.volley:volley:1.1.0'
-
-    //circular imageview
+    //circular image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    //loading of images : Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0'
-
+    //like button
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
-
+    //Decimal round
     implementation 'org.decimal4j:decimal4j:1.0.3'
-
+    //Sugar orm
     implementation 'com.github.satyan:sugar:1.3'
 
 }

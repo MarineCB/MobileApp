@@ -4,6 +4,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -12,8 +13,12 @@ import java.util.Iterator;
 public class City extends SugarRecord<City> {
     private String locationUrl;
     private String name;
-    private Pair<String,String> adminDivision;
-    private Pair<String,String> Country;
+    @Ignore
+    private String adminDivisionUrl;
+    private String adminDivision;
+    private String country;
+    @Ignore
+    private String countryUrl;
     private String population;
     private String timezone;
     private UrbanArea urbanArea;
@@ -33,19 +38,35 @@ public class City extends SugarRecord<City> {
     }
 
     public String getAdminDivision() {
-        return adminDivision.first;
+        return adminDivision;
     }
 
-    public void setAdminDivision(String adminDivision, String url) {
-        this.adminDivision = new Pair<>(adminDivision, url);
+    public String getAdminDivisionUrl() {
+        return this.adminDivisionUrl;
+    }
+
+    public void setAdminDivision(String adminDivision) {
+        this.adminDivision = adminDivision;
+    }
+
+    public void setAdminDivisionUrl(String url) {
+        this.adminDivisionUrl = url;
     }
 
     public String getCountry() {
-        return Country.first;
+        return this.country;
     }
 
-    public void setCountry(String country, String url) {
-        Country = new Pair<>(country, url);
+    public String getCountryUrl() {
+        return this.countryUrl;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCountryUrl(String url) {
+        this.countryUrl = url;
     }
 
     public String getPopulation() {

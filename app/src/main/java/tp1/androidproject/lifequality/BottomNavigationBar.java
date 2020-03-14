@@ -1,6 +1,5 @@
 package tp1.androidproject.lifequality;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -26,6 +25,8 @@ public class BottomNavigationBar {
                 switch (item.getItemId()){
                     case R.id.search:
                         Toast.makeText(act.getApplicationContext(),"Search selected",Toast.LENGTH_SHORT).show();
+                        Intent searchAct = new Intent(act.getApplicationContext(), SearchActivity.class);
+                        act.getApplicationContext().startActivity(searchAct);
                         return true;
                     case R.id.settings:
                         Toast.makeText(act.getApplicationContext(),"Settings selected",Toast.LENGTH_SHORT).show();

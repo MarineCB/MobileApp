@@ -45,7 +45,7 @@ public class CityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
         BottomNavigationBar bar = BottomNavigationBar.getInstance(this);
-       // City.deleteAll(City.class);
+        //City.deleteAll(City.class);
         CircleImageView cityImg = findViewById(R.id.city_img);
         cityNameTv = findViewById(R.id.city_fullname);
         populationTv = findViewById(R.id.mayor_ua_tv);
@@ -67,6 +67,8 @@ public class CityActivity extends AppCompatActivity {
         else
             Glide.with(getApplicationContext()).load(intent.getStringExtra("chosenCityImg")).into(cityImg);
 
+        NotificationService.scheduleJob(getApplicationContext());
+
         startRequest();
     }
 
@@ -75,7 +77,8 @@ public class CityActivity extends AppCompatActivity {
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                cityRef.get().save();
+                City city = cityRef.get();
+                city.save();
                 Toast.makeText(getApplicationContext(),"Saved",Toast.LENGTH_SHORT).show();
             }
 
@@ -116,10 +119,12 @@ public class CityActivity extends AppCompatActivity {
                                 response = response.getJSONObject("_links");
 
                                 JSONObject values = response.getJSONObject("city:admin1_division");
-                                city.setAdminDivision(values.getString("name"), values.getString("href"));
+                                city.setAdminDivision(values.getString("name"));
+                                city.setAdminDivisionUrl(values.getString("href"));
 
                                 values = response.getJSONObject("city:country");
-                                city.setCountry(values.getString("name"), values.getString("href"));
+                                city.setCountry(values.getString("name"));
+                                city.setCountryUrl(values.getString("href"));
 
                                 values = response.getJSONObject("city:timezone");
                                 city.setTimezone(values.getString("name"));

@@ -88,18 +88,18 @@ class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay
         ArrayList<CityDisplay> listResults = myAdapter.getResultItems();
         Log.i("Favorite", savedCities.toString());
         for (City city : savedCities) {
-            publishProgress(new CityDisplay(city.getName(), retrieveImgUrl(city.getName()), city.getLocationUrl()));
+            publishProgress(new CityDisplay(city.getName(), retrieveImgUrl(city.getName(),city.getCountry(), city.getAdminDivision()), city.getLocationUrl()));
         }
         return listResults;
 
     }
 
-    private String retrieveImgUrl(String fullNameCity) {
+    private String retrieveImgUrl(String nameCity, String nameCountry, String adminDiv) {
         URL url;
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags=" + fullNameCity + "&format=json");
+            url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags=" + nameCity + ",%20" + nameCountry + ",%20" + adminDiv + "&format=json");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setUseCaches(false);
             urlConnection.connect();
