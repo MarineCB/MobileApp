@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import tp1.androidproject.lifequality.Model.SearchResult;
 
 public abstract class GenericViewHolder<E> extends RecyclerView.ViewHolder{
 

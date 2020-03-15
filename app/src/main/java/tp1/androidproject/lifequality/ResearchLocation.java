@@ -22,15 +22,15 @@ import java.util.ArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import tp1.androidproject.lifequality.Constant.Constants;
-import tp1.androidproject.lifequality.Model.SearchResult;
+import tp1.androidproject.lifequality.Model.CityDisplay;
 
-public class ResearchLocation extends AsyncTask<String, SearchResult, ArrayList<SearchResult>> {
+public class ResearchLocation extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay>> {
     private String searchUrl;
     private WeakReference<RecyclerView> listCitiesRef;
     private WeakReference<Context> contextRef;
     private WeakReference<TextView> wrongResearchRef;
     private RecyclerView listCities;
-    private RecyclerViewAdapter<SearchResult> myAdapter;
+    private RecyclerViewAdapter<CityDisplay> myAdapter;
 
     public ResearchLocation(WeakReference<RecyclerView> rvRef, String userInput, WeakReference<Context> contextRef,
                             WeakReference<TextView> wrongResearchRef){
@@ -49,13 +49,13 @@ public class ResearchLocation extends AsyncTask<String, SearchResult, ArrayList<
     }
 
     @Override
-    protected void onProgressUpdate(SearchResult... results){
+    protected void onProgressUpdate(CityDisplay... results){
         myAdapter.add(results[0]);
         myAdapter.notifyItemInserted(myAdapter.getResultItems().size()-1);
     }
 
     @Override
-    protected ArrayList<SearchResult> doInBackground(String... strings) {
+    protected ArrayList<CityDisplay> doInBackground(String... strings) {
         URL url;
         HttpURLConnection urlConnection = null;
 
@@ -68,7 +68,7 @@ public class ResearchLocation extends AsyncTask<String, SearchResult, ArrayList<
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             String rawJson = readStream(in);
 
-            ArrayList<SearchResult> listResults = myAdapter.getResultItems();
+            ArrayList<CityDisplay> listResults = myAdapter.getResultItems();
             JSONObject json = new JSONObject(rawJson);
             json = json.getJSONObject("_embedded");
             JSONArray array = json.getJSONArray("city:search-results");
@@ -77,7 +77,7 @@ public class ResearchLocation extends AsyncTask<String, SearchResult, ArrayList<
                 JSONObject city_i = array.getJSONObject(i);
                 String cityUrl = city_i.getJSONObject("_links").getJSONObject("city:item").getString( "href");
                 String fullName = city_i.getString("matching_full_name");
-                publishProgress(new SearchResult(fullName, retrieveImgUrl(fullName),cityUrl));
+                publishProgress(new CityDisplay(fullName, retrieveImgUrl(fullName),cityUrl));
             }
 
 
@@ -136,7 +136,7 @@ public class ResearchLocation extends AsyncTask<String, SearchResult, ArrayList<
     }
 
     @Override
-    protected void onPostExecute(ArrayList<SearchResult> results){
+    protected void onPostExecute(ArrayList<CityDisplay> results){
         TextView wrongResearchTv = wrongResearchRef.get();
         if(listCitiesRef != null){
             if(results == null || results.size() == 0){

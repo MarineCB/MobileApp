@@ -15,12 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import tp1.androidproject.lifequality.CityActivity;
 import tp1.androidproject.lifequality.R;
-import tp1.androidproject.lifequality.Model.SearchResult;
+import tp1.androidproject.lifequality.Model.CityDisplay;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
 
-public class ResearchCityHolder extends GenericViewHolder<SearchResult> {
+public class ResearchCityHolder extends GenericViewHolder<CityDisplay> {
     private ImageView locationImage;
     //private CircleImageView locationImage;
     private CardView cardView;
@@ -37,8 +37,8 @@ public class ResearchCityHolder extends GenericViewHolder<SearchResult> {
     }
 
     @Override
-    public void display(int position, ArrayList<SearchResult> resultItems, final Context context){
-        final SearchResult item = resultItems.get(position);
+    public void display(int position, ArrayList<CityDisplay> resultItems, final Context context){
+        final CityDisplay item = resultItems.get(position);
         this.locationFullname.setText(item.getFullName());
         this.cityUrl = item.getUrlCity();
         final String imageUrl = item.getImageUrl();

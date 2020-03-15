@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavoritesActivity">
+    tools:context=".FavoritesActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/favorite_cities_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Favorite cities"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:textColor="@color/cardview_dark_background"/>
+
+    <TextView
+        android:id="@+id/no_city_saved_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You have no favorite city yet"
+        android:layout_margin="20dp"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorite_cities_list_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="15dp"
+        android:scrollbars="vertical"
+        app:layout_constraintHeight_max="500dp"
+        tools:itemCount="10"
+        android:layout_below="@+id/favorite_cities_label">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/cardview_light_background"
+        app:menu="@menu/nav_bar"
+        />
+
+</RelativeLayout>

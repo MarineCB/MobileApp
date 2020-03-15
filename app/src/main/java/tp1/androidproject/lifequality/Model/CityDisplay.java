@@ -1,11 +1,11 @@
 package tp1.androidproject.lifequality.Model;
 
-public class SearchResult{
+public class CityDisplay {
     private String fullName;
     private String imageUrl;
     private String urlCity;
 
-    public SearchResult(String fullName, String imageUrl, String urlCity) {
+    public CityDisplay(String fullName, String imageUrl, String urlCity) {
         this.fullName = fullName;
         this.imageUrl = imageUrl;
         this.urlCity = urlCity;
