@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -44,7 +45,7 @@ public class CityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
-        BottomNavigationBar bar = BottomNavigationBar.getInstance(this);
+      //  BottomNavigationBar bar = BottomNavigationBar.getInstance(this);
         //City.deleteAll(City.class);
         CircleImageView cityImg = findViewById(R.id.city_img);
         cityNameTv = findViewById(R.id.city_fullname);
@@ -59,6 +60,7 @@ public class CityActivity extends AppCompatActivity {
         cityObj.setLocationUrl(intent.getStringExtra("chosenCityUrl"));
         this.cityRef = new WeakReference<>(cityObj);
 
+        BottomNavigationBar.initializeBottomNavBar(getApplicationContext(), (BottomNavigationView)findViewById(R.id.navigation_bar),R.id.search);
         Initialize();
 
         String imgUrl = intent.getStringExtra("chosenCityImg");

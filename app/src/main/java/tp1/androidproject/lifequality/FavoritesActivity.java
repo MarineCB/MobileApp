@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +48,7 @@ public class FavoritesActivity extends AppCompatActivity {
         RecyclerView citiesList = findViewById(R.id.favorite_cities_list_rv);
      //   ArrayList<City> savedCities = City.getAllSavedCities();
 
+        BottomNavigationBar.initializeBottomNavBar(getApplicationContext(), (BottomNavigationView)findViewById(R.id.navigation_bar),R.id.favorite);
         new LoadFavorites(new WeakReference<>(citiesList),
                 new WeakReference<>(getApplicationContext()),
                         new WeakReference<>((TextView)findViewById(R.id.no_city_saved_tv))).execute();

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.NonNull;
@@ -26,7 +28,7 @@ public class SearchActivity extends AppCompatActivity {
 
         init(citiesList);
 
-
+        BottomNavigationBar.initializeBottomNavBar(getApplicationContext(), (BottomNavigationView)findViewById(R.id.navigation_bar),R.id.search);
       //  requestPermissions();
 
     }

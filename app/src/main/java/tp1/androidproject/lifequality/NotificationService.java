@@ -10,6 +10,7 @@ import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.NetworkRequest;
 import android.os.Build;
 import android.provider.CalendarContract;
 import android.util.Log;
@@ -24,12 +25,12 @@ import java.util.concurrent.TimeUnit;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import static java.util.concurrent.TimeUnit.HOURS;
 
 public class NotificationService extends JobService {
     private static final String CHANNEL_ID = "NotificationService" ;
 
     private static final long HOUR_IN_MILLIS = TimeUnit.HOURS.toMillis(1);
+    private static final long MIN_IN_MILLIS = TimeUnit.MINUTES.toMillis(1);
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -79,10 +80,13 @@ public class NotificationService extends JobService {
 
 
     public static void scheduleJob(Context context) {
+        Log.i("JobServiceSample", "schedule job start");
         ComponentName serviceComponent = new ComponentName(context, NotificationService.class);
         JobInfo info = new JobInfo.Builder(0, serviceComponent)
-                .setMinimumLatency(HOUR_IN_MILLIS *10)      // Temps d'attente minimal avant déclenchement
-                .setOverrideDeadline(HOUR_IN_MILLIS*10 + HOUR_IN_MILLIS/2)    // Temps d'attente maximal avant déclenchement
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPersisted(true)
+                .setMinimumLatency(HOUR_IN_MILLIS *2)      // Temps d'attente minimal avant déclenchement
+                .setOverrideDeadline(HOUR_IN_MILLIS*2 + MIN_IN_MILLIS*30)    // Temps d'attente maximal avant déclenchement
                 .build();
 
         JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
