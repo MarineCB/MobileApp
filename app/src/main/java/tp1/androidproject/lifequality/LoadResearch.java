@@ -21,10 +21,10 @@ import java.util.ArrayList;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import tp1.androidproject.lifequality.Constant.Constants;
+import tp1.androidproject.lifequality.Utils.Constants;
 import tp1.androidproject.lifequality.Model.CityDisplay;
 
-public class ResearchLocation extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay>> {
+public class LoadResearch extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay>> {
     private String searchUrl;
     private WeakReference<RecyclerView> listCitiesRef;
     private WeakReference<Context> contextRef;
@@ -32,8 +32,8 @@ public class ResearchLocation extends AsyncTask<String, CityDisplay, ArrayList<C
     private RecyclerView listCities;
     private RecyclerViewAdapter<CityDisplay> myAdapter;
 
-    public ResearchLocation(WeakReference<RecyclerView> rvRef, String userInput, WeakReference<Context> contextRef,
-                            WeakReference<TextView> wrongResearchRef){
+    public LoadResearch(WeakReference<RecyclerView> rvRef, String userInput, WeakReference<Context> contextRef,
+                        WeakReference<TextView> wrongResearchRef){
         this.listCitiesRef = rvRef;
         this.searchUrl = Constants.UrlCitySearch+userInput;
         this.contextRef = contextRef;
@@ -46,6 +46,7 @@ public class ResearchLocation extends AsyncTask<String, CityDisplay, ArrayList<C
         myAdapter = new RecyclerViewAdapter<>(contextRef.get(), R.layout.search_results_item);
         listCities.setLayoutManager(new LinearLayoutManager(contextRef.get()));
         listCities.setAdapter(myAdapter);
+        wrongResearchRef.get().setVisibility(View.GONE);
     }
 
     @Override
@@ -80,9 +81,7 @@ public class ResearchLocation extends AsyncTask<String, CityDisplay, ArrayList<C
                 publishProgress(new CityDisplay(fullName, retrieveImgUrl(fullName),cityUrl));
             }
 
-
             return listResults;
-           // myAdapter.getResultItems();
 
         } catch (JSONException | IOException e) {
             e.printStackTrace();
@@ -145,8 +144,6 @@ public class ResearchLocation extends AsyncTask<String, CityDisplay, ArrayList<C
             }else {
                 wrongResearchTv.setVisibility(View.GONE);
                 listCities.setVisibility(View.VISIBLE);
-
-
             }
         }
     }

@@ -1,4 +1,4 @@
-package tp1.androidproject.lifequality;
+package tp1.androidproject.lifequality.Fragments;
 
 
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import tp1.androidproject.lifequality.Model.UrbanArea;
+import tp1.androidproject.lifequality.R;
+import tp1.androidproject.lifequality.RecyclerViewAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

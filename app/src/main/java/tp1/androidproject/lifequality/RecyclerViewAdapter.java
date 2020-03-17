@@ -45,7 +45,6 @@ public class RecyclerViewAdapter<E> extends RecyclerView.Adapter<GenericViewHold
     @NonNull
     @Override
     public GenericViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // chercher le layout pour qu'il corresponde a celui qu'on veut / pas toujours le
         GenericViewHolder holder = null;
         if(resourceLayout == R.layout.search_results_item){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_results_item,parent, false);

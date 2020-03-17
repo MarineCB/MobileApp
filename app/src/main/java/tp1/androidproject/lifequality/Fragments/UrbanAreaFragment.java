@@ -1,7 +1,18 @@
-package tp1.androidproject.lifequality;
+package tp1.androidproject.lifequality.Fragments;
+
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import tp1.androidproject.lifequality.Model.Salary;
+import tp1.androidproject.lifequality.Model.UrbanArea;
+import tp1.androidproject.lifequality.R;
+import tp1.androidproject.lifequality.VolleyController;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,12 +27,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-import tp1.androidproject.lifequality.Model.Salary;
-import tp1.androidproject.lifequality.Model.UrbanArea;
 
-public class UrbanAreaActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class UrbanAreaFragment extends Fragment {
     private UrbanArea urbanArea;
     private VolleyController controller;
 
@@ -34,21 +44,50 @@ public class UrbanAreaActivity extends AppCompatActivity {
     private TextView continentUa;
     private TextView mayorUa;
 
+    private View view;
+
+    public UrbanAreaFragment(String uaUrl) {
+        this.urbanArea = new UrbanArea(uaUrl);
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_urban_area);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_urban_area, container, false);
 
-        controller = VolleyController.getInstance(getApplicationContext());
-        urbanArea = new UrbanArea(getIntent().getStringExtra("urbanAreaUrl"));
+        controller = VolleyController.getInstance(getContext());
 
-        this.nameUa = findViewById(R.id.name_ua_tv);
-        this.fullnameUa = findViewById(R.id.fullname_ua_tv);
-        this.continentUa = findViewById(R.id.continent_ua_tv);
-        this.mayorUa = findViewById(R.id.mayor_ua_tv);
+        this.nameUa = view.findViewById(R.id.name_ua_tv);
+        this.fullnameUa = view.findViewById(R.id.fullname_ua_tv);
+        this.continentUa = view.findViewById(R.id.continent_ua_tv);
+        this.mayorUa = view.findViewById(R.id.mayor_ua_tv);
 
         init();
         parallelizedSubCatRequests();
+
+        view.findViewById(R.id.card_view_list_cities).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listCitiesClicked();
+            }
+        });
+
+        view.findViewById(R.id.card_view_salaries).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listSalariesClicked();
+            }
+        });
+
+        view.findViewById(R.id.card_view_scores).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listScoresClicked();
+            }
+        });
+
+        return view;
     }
 
     public void init(){
@@ -73,12 +112,7 @@ public class UrbanAreaActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            Toast.makeText(getContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
                         }
                     });
             controller.addToRequestQueue(req);
@@ -98,9 +132,9 @@ public class UrbanAreaActivity extends AppCompatActivity {
                             if(images != null && images.length()!= 0){
                                 String image = images.getJSONObject(0).getJSONObject("image").getString("web");
                                 urbanArea.setImageUrl(image);
-                                Glide.with(getApplicationContext()).load(image).into((ImageView)findViewById(R.id.ua_image));
+                                Glide.with(getContext()).load(image).into((ImageView)view.findViewById(R.id.ua_image));
                             }else{
-                                findViewById(R.id.ua_image).setVisibility(View.GONE);
+                                view.findViewById(R.id.ua_image).setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -110,12 +144,7 @@ public class UrbanAreaActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), "Sorry, there has been an issue with the image...", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                                Toast.makeText(getContext(), "Sorry, there has been an issue with the image...", Toast.LENGTH_LONG).show();
                     }
                 });
         controller.addToRequestQueue(req);
@@ -136,21 +165,16 @@ public class UrbanAreaActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }finally {
                             scoresFrag = new ScoresUaFragment(urbanArea.getScores());
-                            getSupportFragmentManager().beginTransaction().add(R.id.container_scores,scoresFrag).hide(scoresFrag).commit();
+                            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_scores,scoresFrag).hide(scoresFrag).commit();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        Toast.makeText(getContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
                     }
-                });
+        });
         controller.addToRequestQueue(req);
 
         req = new JsonObjectRequest(Request.Method.GET, urbanArea.getUrl()+"cities/", null,
@@ -170,25 +194,16 @@ public class UrbanAreaActivity extends AppCompatActivity {
                         }finally {
 
                             citiesFrag = new CitiesUaFragment(urbanArea.getCities());
-                            getSupportFragmentManager().beginTransaction().add(R.id.container_cities,citiesFrag).hide(citiesFrag).commit();
-                         /*   listCities = findViewById(R.id.cities_ua_list_rv);
-                            cityAdapter = new RecyclerViewAdapter<>(getApplicationContext(), R.layout.ua_cities_item, urbanArea.getCities());
-                            listCities.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                            listCities.setAdapter(cityAdapter);*/
+                            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_cities,citiesFrag).hide(citiesFrag).commit();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        Toast.makeText(getContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
                     }
-                });
+        });
         controller.addToRequestQueue(req);
 
         req = new JsonObjectRequest(Request.Method.GET, urbanArea.getUrl()+"salaries/", null,
@@ -202,28 +217,23 @@ public class UrbanAreaActivity extends AppCompatActivity {
                                 JSONObject obj = salaries.getJSONObject(i);
                                 JSONObject percentiles = obj.getJSONObject("salary_percentiles");
                                 urbanArea.addSalary(new Salary(obj.getJSONObject("job").getString("title"),
-                                                percentiles.getDouble("percentile_25"),
-                                                percentiles.getDouble("percentile_50"),
-                                                percentiles.getDouble("percentile_75")));
+                                        percentiles.getDouble("percentile_25"),
+                                        percentiles.getDouble("percentile_50"),
+                                        percentiles.getDouble("percentile_75")));
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }finally {
                             salariesFrag = new SalariesUaFragment(urbanArea.getSalaries());
-                            getSupportFragmentManager().beginTransaction().add(R.id.container_salaries,salariesFrag).hide(salariesFrag).commit();
+                            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_salaries,salariesFrag).hide(salariesFrag).commit();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        Toast.makeText(getContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
                     }
                 });
         controller.addToRequestQueue(req);
@@ -239,16 +249,12 @@ public class UrbanAreaActivity extends AppCompatActivity {
             mayorUa.setText(urbanArea.getMayor());
         }else{
             mayorUa.setVisibility(View.GONE);
-            findViewById(R.id.mayor_ua_label_tv).setVisibility(View.GONE);
+            view.findViewById(R.id.mayor_ua_label_tv).setVisibility(View.GONE);
         }
     }
 
-    public void listCitiesClicked(View v){
-       /* if(listCities.getVisibility() == View.VISIBLE)
-            listCities.setVisibility(View.GONE);
-        else
-            listCities.setVisibility(View.VISIBLE);*/
-        FragmentTransaction transactionCities = getSupportFragmentManager().beginTransaction();
+    public void listCitiesClicked(){
+        FragmentTransaction transactionCities = getActivity().getSupportFragmentManager().beginTransaction();
         if (!citiesFrag.isVisible()){
             transactionCities.show(citiesFrag);
         }else{
@@ -257,8 +263,8 @@ public class UrbanAreaActivity extends AppCompatActivity {
         transactionCities.commit();
     }
 
-    public void ScoresUaClicked(View v){
-        FragmentTransaction transactionScores = getSupportFragmentManager().beginTransaction();
+    public void listScoresClicked(){
+        FragmentTransaction transactionScores = getActivity().getSupportFragmentManager().beginTransaction();
         if (!scoresFrag.isVisible()){
             transactionScores.show(scoresFrag);
         }else{
@@ -267,8 +273,8 @@ public class UrbanAreaActivity extends AppCompatActivity {
         transactionScores.commit();
     }
 
-    public void listSalariesClicked(View v){
-        FragmentTransaction transactionScores = getSupportFragmentManager().beginTransaction();
+    public void listSalariesClicked(){
+        FragmentTransaction transactionScores = getActivity().getSupportFragmentManager().beginTransaction();
         if (!salariesFrag.isVisible()){
             transactionScores.show(salariesFrag);
         }else{

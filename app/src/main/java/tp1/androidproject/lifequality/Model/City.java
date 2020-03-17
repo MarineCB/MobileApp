@@ -102,13 +102,14 @@ public class City extends SugarRecord<City> {
     }
 
     public static ArrayList<City> getAllSavedCities(){
-        Iterator<City> iterator = City.findAll(City.class);
+    /*    Iterator<City> iterator = City.findAll(City.class);
         ArrayList<City> temp = new ArrayList<>();
         while (iterator.hasNext()) {
             temp.add(iterator.next());
         }
         Log.i("Favorite", temp.toString());
-        return temp;
+        return temp;*/
+        return new ArrayList<>(City.listAll(City.class));
     }
 
     @Override
