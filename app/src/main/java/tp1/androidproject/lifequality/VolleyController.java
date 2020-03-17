@@ -9,7 +9,7 @@ import com.android.volley.toolbox.Volley;
 public class VolleyController {
     private static VolleyController instance;
     private RequestQueue reqQueue;
-    private static Context ctx;
+    private Context ctx;
 
     private VolleyController(Context context) {
         ctx = context;
@@ -23,7 +23,7 @@ public class VolleyController {
         return instance;
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (reqQueue == null) {
             reqQueue = Volley.newRequestQueue(ctx.getApplicationContext());
         }

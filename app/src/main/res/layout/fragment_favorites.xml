@@ -3,24 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FavoritesActivity"
+    android:layout_height="wrap_content"
+    tools:context=".Fragments.FavoritesFragment"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/favorite_cities_label"
+        android:textColor="?attr/text_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Favorite cities"
         android:textSize="20sp"
         android:gravity="center"
-        android:layout_margin="20dp"
-        android:textColor="@color/cardview_dark_background"/>
+        android:layout_margin="20dp"/>
 
     <TextView
         android:id="@+id/no_city_saved_tv"
+        android:textColor="?attr/text_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/favorite_cities_label"
         android:text="You have no favorite city yet"
         android:layout_margin="20dp"
         android:visibility="gone" />
@@ -38,14 +40,5 @@
         android:layout_below="@+id/favorite_cities_label">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/cardview_light_background"
-        app:menu="@menu/nav_bar"
-        />
 
 </RelativeLayout>

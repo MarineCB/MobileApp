@@ -8,9 +8,13 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Specify the behavior of all the view holder used
+ * Extends RecyclerView.ViewHolder so the class inheriting have the same behavior
+ */
 public abstract class GenericViewHolder<E> extends RecyclerView.ViewHolder{
 
-    public GenericViewHolder(@NonNull View itemView) {
+    GenericViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 

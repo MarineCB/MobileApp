@@ -1,27 +1,10 @@
 package tp1.androidproject.lifequality;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import tp1.androidproject.lifequality.Constant.Constants;
-import tp1.androidproject.lifequality.Model.City;
-import tp1.androidproject.lifequality.Model.CityDisplay;
-
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.bumptech.glide.Glide;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,29 +19,19 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class FavoritesActivity extends AppCompatActivity {
-    private ArrayList<CityDisplay> citiesFavorite = new ArrayList<>();
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorites);
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import tp1.androidproject.lifequality.Model.City;
+import tp1.androidproject.lifequality.Model.CityDisplay;
+import tp1.androidproject.lifequality.Utils.Constants;
 
-        RecyclerView citiesList = findViewById(R.id.favorite_cities_list_rv);
-     //   ArrayList<City> savedCities = City.getAllSavedCities();
-
-        BottomNavigationBar.initializeBottomNavBar(getApplicationContext(), (BottomNavigationView)findViewById(R.id.navigation_bar),R.id.favorite);
-        new LoadFavorites(new WeakReference<>(citiesList),
-                new WeakReference<>(getApplicationContext()),
-                        new WeakReference<>((TextView)findViewById(R.id.no_city_saved_tv))).execute();
-    }
-}
-
-
-class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay>> {
+/**
+ * Class extending AsynTask
+ * Responsible for the loading of favorites information and retrieving of picture from flickr
+ */
+public class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay>> {
     private WeakReference<RecyclerView> listCitiesRef;
-    private RecyclerView listCities;
     private RecyclerViewAdapter<CityDisplay> myAdapter;
     private WeakReference<Context> contextRef;
     private WeakReference<TextView> listEmptyRef;
@@ -73,12 +46,15 @@ class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay
 
     @Override
     protected void onPreExecute() {
-        listCities = listCitiesRef.get();
+        RecyclerView listCities = listCitiesRef.get();
         myAdapter = new RecyclerViewAdapter<>(contextRef.get(), R.layout.search_results_item);
         listCities.setLayoutManager(new LinearLayoutManager(contextRef.get()));
         listCities.setAdapter(myAdapter);
     }
 
+    /**
+     * Display each time a city is fully loaded
+     */
     @Override
     protected void onProgressUpdate(CityDisplay... results) {
         myAdapter.add(results[0]);
@@ -96,12 +72,15 @@ class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay
 
     }
 
+    /**
+     * Get the picture from Flickr with the name of the city (plus its country and administrative division)
+     */
     private String retrieveImgUrl(String nameCity, String nameCountry, String adminDiv) {
         URL url;
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags=" + nameCity + ",%20" + nameCountry + ",%20" + adminDiv + "&format=json");
+            url = new URL(Constants.FLICKR_URL + nameCity + ", " + adminDiv + ", " + nameCountry + "&format=json");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setUseCaches(false);
             urlConnection.connect();
@@ -125,7 +104,9 @@ class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay
         return null;
     }
 
-
+    /**
+     * Transform the stream coming from the Url into a string
+     */
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(is), 1000);
@@ -136,20 +117,23 @@ class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay
         return sb.toString();
     }
 
+    /**
+     * If no city has been found, will make a informative message visible, invisible otherwise
+     */
     @Override
     protected void onPostExecute(ArrayList<CityDisplay> results) {
-        Context context = contextRef.get();
         TextView listEmpty = listEmptyRef.get();
+
         if (listCitiesRef != null) {
+            RecyclerView listCities = listCitiesRef.get();
             if (results == null || results.size() == 0) {
                 listEmpty.setVisibility(View.VISIBLE);
                 listCities.setVisibility(View.INVISIBLE);
             } else {
                 listEmpty.setVisibility(View.GONE);
                 listCities.setVisibility(View.VISIBLE);
-
-
             }
         }
     }
 }
+

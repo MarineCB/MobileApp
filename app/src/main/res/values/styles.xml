@@ -1,12 +1,22 @@
 <resources>
 
     <!-- Base application theme. -->
+    <!-- Light application theme. -->
     <style name="AppTheme"  parent="Theme.AppCompat.DayNight.NoActionBar" >
-        <!--    <style name="AppTheme" parent="Theme.AppCompat">  -> dark mode -->
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#0085C0</item>
+        <item name="colorPrimaryDark">#004A6D</item>
+        <item name="colorAccent">#ffa600</item>
+        <item name="background_color">#fcfcfc</item>
+        <item name="text_color">#1A1A1A</item>
+    </style>
+
+    <style name="DarkTheme"  parent="Theme.AppCompat.DayNight.NoActionBar" >
+        <item name="colorPrimary">#0085C0</item>
+        <item name="colorPrimaryDark">#004A6D</item>
+        <item name="colorAccent">#ffa600</item>
+        <item name="background_color">#2C2C2C</item>
+        <item name="card_color">@color/cardview_dark_background</item>
+        <item name="text_color">#FCFCFC</item>
     </style>
 
 </resources>

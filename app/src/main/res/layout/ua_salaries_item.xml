@@ -7,6 +7,7 @@
 
     <TextView
         android:id="@+id/job_title"
+        android:textColor="?attr/text_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -20,6 +21,7 @@
 
         <TextView
             android:id="@+id/percentile_25_label"
+            android:textColor="?attr/text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -28,6 +30,7 @@
 
         <TextView
             android:id="@+id/percentile_25"
+            android:textColor="?attr/text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -41,6 +44,7 @@
 
         <TextView
             android:id="@+id/percentile_50_label"
+            android:textColor="?attr/text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -49,6 +53,7 @@
 
         <TextView
             android:id="@+id/percentile_50"
+            android:textColor="?attr/text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -62,6 +67,7 @@
 
         <TextView
             android:id="@+id/percentile_75_label"
+            android:textColor="?attr/text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -70,6 +76,7 @@
 
         <TextView
             android:id="@+id/percentile_75"
+            android:textColor="?attr/text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
