@@ -14,7 +14,6 @@ public class UrbanArea extends SugarRecord<UrbanArea> {
     private String continent;
     private String country;
     private String detailsUrl;
-    // faire une liste d'image ?? "ua:images" -> lien mobile gros plan
     private String salariesUrl;
     private ArrayList<Salary> salaries;
     private String imageUrl;

@@ -87,49 +87,4 @@ public class NotificationService extends JobService {
         JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
         jobScheduler.schedule(info);
     }
-/*
-    @Override
-    public void onCreate() {
-       /* listener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Intent i = new Intent("location_update");
-                i.putExtra("latitude",location.getLatitude());
-                i.putExtra("longitude",location.getLongitude());
-                sendBroadcast(i);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent service = new Intent(getApplicationContext(), NotificationService.class);
-                stopService(service);
-            }
-        };
-        manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, listener);
-        final Handler handler = new Handler();
-        timer = new Timer();
-        task = new TimerTask() {
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-                        Toast.makeText(NotificationService.this, "plop !", Toast.LENGTH_SHORT).show();
-                    } });
-            }};
-        timer.schedule(task, 0, 5000);
-
- */
 }

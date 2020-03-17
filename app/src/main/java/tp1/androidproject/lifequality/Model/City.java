@@ -1,14 +1,9 @@
 package tp1.androidproject.lifequality.Model;
 
-import android.util.Log;
-import android.util.Pair;
-
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class City extends SugarRecord<City> {
     private String locationUrl;

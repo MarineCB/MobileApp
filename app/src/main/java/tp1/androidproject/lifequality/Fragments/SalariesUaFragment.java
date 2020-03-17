@@ -2,20 +2,18 @@ package tp1.androidproject.lifequality.Fragments;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import tp1.androidproject.lifequality.Model.Salary;
-import tp1.androidproject.lifequality.Model.Score;
-import tp1.androidproject.lifequality.R;
-import tp1.androidproject.lifequality.RecyclerViewAdapter;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import tp1.androidproject.lifequality.Model.Salary;
+import tp1.androidproject.lifequality.R;
+import tp1.androidproject.lifequality.RecyclerViewAdapter;
 
 
 public class SalariesUaFragment extends Fragment {

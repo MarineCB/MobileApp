@@ -32,6 +32,11 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment of City description
+ * Inflated when a city has been chosen in the Search of Favorites page
+ */
+
 public class CityFragment extends Fragment {
     private String cityUrl;
     private String imgUrl;
@@ -61,6 +66,7 @@ public class CityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_city, container, false);
+
         CircleImageView cityImg = view.findViewById(R.id.city_img);
         cityNameTv = view.findViewById(R.id.city_fullname);
         populationTv = view.findViewById(R.id.mayor_ua_tv);

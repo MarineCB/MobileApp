@@ -1,31 +1,17 @@
 package tp1.androidproject.lifequality.Fragments;
 
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.preference.ListPreference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
+import android.widget.Toast;
+import androidx.fragment.app.Fragment;
 import tp1.androidproject.lifequality.Model.City;
 import tp1.androidproject.lifequality.R;
-import tp1.androidproject.lifequality.SearchActivity;
-import tp1.androidproject.lifequality.Utils.Constants;
 
 public class SettingsFragment extends Fragment {
     private View view;
-    private Activity act;
 
     public SettingsFragment() {
     }
@@ -37,6 +23,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 City.deleteAll(City.class);
+                Toast.makeText(getContext(),"Cities Deleted",Toast.LENGTH_SHORT).show();
             }
         });
         return view;

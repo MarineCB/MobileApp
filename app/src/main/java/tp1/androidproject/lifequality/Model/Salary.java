@@ -4,8 +4,6 @@ import com.orm.SugarRecord;
 
 import org.decimal4j.util.DoubleRounder;
 
-import java.text.DecimalFormat;
-
 public class Salary extends SugarRecord<Salary> {
     private String name;
     private Double percentile25;

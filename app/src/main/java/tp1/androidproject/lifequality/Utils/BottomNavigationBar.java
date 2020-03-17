@@ -1,6 +1,5 @@
 package tp1.androidproject.lifequality.Utils;
 
-import android.app.Activity;
 import android.view.MenuItem;
 import android.widget.Toast;
 

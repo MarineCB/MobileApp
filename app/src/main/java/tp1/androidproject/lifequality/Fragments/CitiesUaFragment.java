@@ -2,20 +2,23 @@ package tp1.androidproject.lifequality.Fragments;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import tp1.androidproject.lifequality.Model.UrbanArea;
-import tp1.androidproject.lifequality.R;
-import tp1.androidproject.lifequality.RecyclerViewAdapter;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import tp1.androidproject.lifequality.R;
+import tp1.androidproject.lifequality.RecyclerViewAdapter;
+
+/**
+ * Fragment of the Urban Area (UA) description : cities composing the UA
+ * Inflated when the cities have been loaded
+ * Visible when the card view, i.e. its container is clicked
+ */
 
 public class CitiesUaFragment extends Fragment {
     private ArrayList<String> cities;

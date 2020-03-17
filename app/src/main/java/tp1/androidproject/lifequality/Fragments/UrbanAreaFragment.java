@@ -28,9 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class UrbanAreaFragment extends Fragment {
     private UrbanArea urbanArea;
     private VolleyController controller;

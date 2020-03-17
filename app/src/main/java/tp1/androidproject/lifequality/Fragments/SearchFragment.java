@@ -2,13 +2,6 @@ package tp1.androidproject.lifequality.Fragments;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceFragmentCompat;
-import androidx.recyclerview.widget.RecyclerView;
-import tp1.androidproject.lifequality.R;
-import tp1.androidproject.lifequality.LoadResearch;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +10,15 @@ import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import tp1.androidproject.lifequality.LoadResearch;
+import tp1.androidproject.lifequality.R;
+
 public class SearchFragment extends Fragment {
     private View view;
 
     public SearchFragment() {
-        // Required empty public constructor
     }
 
 

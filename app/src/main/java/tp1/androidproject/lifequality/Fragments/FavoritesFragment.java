@@ -2,20 +2,16 @@ package tp1.androidproject.lifequality.Fragments;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import tp1.androidproject.lifequality.LoadFavorites;
-import tp1.androidproject.lifequality.Model.CityDisplay;
 import tp1.androidproject.lifequality.R;
 
 public class FavoritesFragment extends Fragment {
