@@ -7,7 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import tp1.androidproject.lifequality.Fragments.SearchFragment;
 import tp1.androidproject.lifequality.Utils.BottomNavigationBar;
 
-
+/**
+ * First activity to be launched
+ * Will launch the Favorites fragment if the extra contains the right boolean => Means that the activity is started from the notification
+ * Launch the search fragment otherwise
+ * Initialize the Bottom navigation bar by calling the class with the same name
+ */
 public class SearchActivity extends AppCompatActivity {
 
 

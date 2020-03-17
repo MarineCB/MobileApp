@@ -11,22 +11,22 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
-
-import java.util.concurrent.TimeUnit;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import tp1.androidproject.lifequality.Utils.Constants;
 
-
+/**
+ * Class handling the service
+ * Service is started from the boot of the device
+ * Send a notification every 2/2h30 to the user
+ */
 public class NotificationService extends JobService {
     private static final String CHANNEL_ID = "NotificationService" ;
 
-    private static final long HOUR_IN_MILLIS = TimeUnit.HOURS.toMillis(1);
-    private static final long MIN_IN_MILLIS = TimeUnit.MINUTES.toMillis(1);
-    private static final long INTERVAL_MIN = HOUR_IN_MILLIS * 2;
-    private static final long INTERVAL_MAX = HOUR_IN_MILLIS * 2 + MIN_IN_MILLIS*30;
-
+    /**
+     * Starts the actions
+     */
     @Override
     public boolean onStartJob(JobParameters params) {
 
@@ -40,8 +40,11 @@ public class NotificationService extends JobService {
         return true;
     }
 
+    /**
+     * Instantiate and initialize the notification
+     * and launch the "repetitive" service by calling scheduleJob
+     */
     private void performServiceAction(){
-        Log.i("JobServiceSample", "MainJobService start");
         createNotificationChannel();
         Intent notificationIntent = new Intent(this, SearchActivity.class);
         notificationIntent.putExtra("NotiClick",true);
@@ -50,7 +53,7 @@ public class NotificationService extends JobService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.life_quality_logo)
                 .setContentTitle("Favorite cities")
-                .setContentText("Remember what cities you've saved ?")
+                .setContentText("Remember what cities you have saved ?")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent);
 
@@ -69,19 +72,21 @@ public class NotificationService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.i("JobServiceSample", "MainJobService stop" );
         return true;
     }
 
 
+    /**
+     * Make the task repetitive by calling itself again
+     * set the intervals
+     */
     public static void scheduleJob(Context context) {
-        Log.i("JobServiceSample", "schedule job start");
         ComponentName serviceComponent = new ComponentName(context, NotificationService.class);
         JobInfo info = new JobInfo.Builder(0, serviceComponent)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
-                .setMinimumLatency(INTERVAL_MIN)
-                .setOverrideDeadline(INTERVAL_MAX)
+                .setMinimumLatency(Constants.INTERVAL_MIN)
+                .setOverrideDeadline(Constants.INTERVAL_MAX)
                 .build();
 
         JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);

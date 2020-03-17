@@ -13,6 +13,7 @@ import tp1.androidproject.lifequality.Utils.BottomNavigationBar;
  * Activity created when a city has been chosen (from search or favorites)
  * First inflate the city fragament
  * Can later one contain the urban area fragment or else
+ * Initialize the Bottom navigation bar by calling the class with the same name
  */
 public class CityActivity extends AppCompatActivity {
 
