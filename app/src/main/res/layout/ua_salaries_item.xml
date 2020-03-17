@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <LinearLayout
         android:id="@+id/percentile_1"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
-            android:text="25th percentile : " />
+            android:text="@string/_25th_percentile" />
 
         <TextView
             android:id="@+id/percentile_25"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
-            android:text="50th percentile : " />
+            android:text="@string/_50th_percentile" />
 
         <TextView
             android:id="@+id/percentile_50"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
-            android:text="75th percentile : " />
+            android:text="@string/_75th_percentile" />
 
         <TextView
             android:id="@+id/percentile_75"

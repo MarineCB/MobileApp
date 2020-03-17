@@ -2,5 +2,26 @@
     <string name="app_name">Life Quality</string>
     <string name="searchEditText">Enter the name of a city : </string>
     <string name="search_result_info">Sorry, there is no such city...</string>
+    <string name="image_of_the_urban_area">Image of the Urban Area</string>
+    <string name="_75th_percentile">75th percentile : </string>
+    <string name="_50th_percentile">50th percentile : </string>
+    <string name="_25th_percentile">25th percentile : </string>
+    <string name="image_of_the_city">Image of the city</string>
+    <string name="scores">Scores</string>
+    <string name="settings">Settings</string>
+    <string name="delete_all_favorite_cities_saved">Delete all favorite cities saved</string>
+    <string name="delete">Delete</string>
+    <string name="full_name">Full name: </string>
+    <string name="continent">Continent: </string>
+    <string name="mayor">Mayor:</string>
+    <string name="cities_of_the_urban_area">Cities of the urban area</string>
+    <string name="salaries">Salaries</string>
+    <string name="favorite_cities">Favorite cities</string>
+    <string name="you_have_no_favorite_city_yet">You have no favorite city yet</string>
+    <string name="country">Country:</string>
+    <string name="administrative_division">Administrative division:</string>
+    <string name="population">Population: </string>
+    <string name="timezone">Timezone: </string>
+    <string name="see_ubran_area">See Ubran Area</string>
 
 </resources>

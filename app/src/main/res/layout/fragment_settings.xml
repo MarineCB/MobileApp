@@ -11,7 +11,7 @@
         android:textColor="?attr/text_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textSize="20sp"
         android:gravity="center"
         android:layout_margin="20dp"/>
@@ -24,19 +24,19 @@
         <TextView
             android:id="@+id/saved_cities_delete_label"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:gravity="center_vertical"
             android:textSize="18sp"
             android:textColor="?attr/text_color"
-            android:text="Delete all favorite cities saved" />
+            android:text="@string/delete_all_favorite_cities_saved" />
 
         <Button
             android:id="@+id/delete_cities_button"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
-            android:text="Delete"
+            android:text="@string/delete"
             android:backgroundTint="#C0C0C0"
             android:textColor="#ffff"
             android:layout_gravity="center_vertical"

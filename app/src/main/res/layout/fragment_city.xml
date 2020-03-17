@@ -16,15 +16,15 @@
         android:id="@+id/heart_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="left"
+        android:gravity="start"
         android:layout_alignParentEnd="true"
         />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center">
-
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/city_img"
@@ -41,12 +41,13 @@
             android:layout_gravity="center"
             android:layout_margin="15dp"
             android:textColor="?attr/text_color"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="30dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             android:orientation="vertical"
             android:layout_gravity="center">
 
@@ -60,20 +61,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Country: "
+                    android:text="@string/country"
                     android:textColor="?attr/text_color"
                     android:layout_marginStart="10dp"
-                    android:layout_marginVertical="10dp"
-                    android:textSize="16dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/fullname_ua_tv"
                     android:textColor="?attr/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,19 +91,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Administrative division: "
+                    android:text="@string/administrative_division"
                     android:layout_marginStart="10dp"
-                    android:layout_marginVertical="10dp"
-                    android:textSize="16dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/continent_ua_tv"
                     android:textColor="?attr/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -113,23 +120,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Population: "
+                    android:text="@string/population"
                     android:layout_marginStart="10dp"
-                    android:layout_marginVertical="10dp"
-                    android:textSize="16dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/mayor_ua_tv"
                     android:textColor="?attr/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
             </LinearLayout>
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -139,18 +149,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginVertical="10dp"
-                    android:text="Timezone: "
-                    android:textSize="16dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/timezone"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/timezone_tv"
                     android:textColor="?attr/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:layout_weight="1"
-                    android:textSize="16dp" />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -165,8 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:backgroundTint="@color/colorPrimary"
-            android:onClick="LaunchUrbanActivity"
-            android:text="See Ubran Area"
+            android:text="@string/see_ubran_area"
             android:visibility="invisible"
             android:textAllCaps="false"
             android:textColor="#ffff"/>
