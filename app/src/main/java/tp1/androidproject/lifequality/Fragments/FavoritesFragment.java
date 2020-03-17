@@ -14,11 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import tp1.androidproject.lifequality.LoadFavorites;
 import tp1.androidproject.lifequality.R;
 
+/**
+ * Fragment of the Favorite Cities
+ * Inflated when the favorite icon of the navigation bar is cliked
+ * Calls the LoadFavorites class that will retrieve the saved cities in the Database
+ */
+
 public class FavoritesFragment extends Fragment {
 
-    public FavoritesFragment() {
-    }
-
+    public FavoritesFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

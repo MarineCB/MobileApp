@@ -24,7 +24,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import tp1.androidproject.lifequality.Model.City;
 import tp1.androidproject.lifequality.Model.CityDisplay;
+import tp1.androidproject.lifequality.Utils.Constants;
 
+/**
+ * Class extending AsynTask
+ * Responsible for the loading of favorites information and retrieving of picture from flickr
+ */
 public class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay>> {
     private WeakReference<RecyclerView> listCitiesRef;
     private RecyclerViewAdapter<CityDisplay> myAdapter;
@@ -47,6 +52,9 @@ public class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<City
         listCities.setAdapter(myAdapter);
     }
 
+    /**
+     * Display each time a city is fully loaded
+     */
     @Override
     protected void onProgressUpdate(CityDisplay... results) {
         myAdapter.add(results[0]);
@@ -64,12 +72,15 @@ public class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<City
 
     }
 
+    /**
+     * Get the picture from Flickr with the name of the city (plus its country and administrative division)
+     */
     private String retrieveImgUrl(String nameCity, String nameCountry, String adminDiv) {
         URL url;
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags=" + nameCity + ", " + adminDiv + ", " + nameCountry + "&format=json");
+            url = new URL(Constants.FLICKR_URL + nameCity + ", " + adminDiv + ", " + nameCountry + "&format=json");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setUseCaches(false);
             urlConnection.connect();
@@ -93,7 +104,9 @@ public class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<City
         return null;
     }
 
-
+    /**
+     * Transform the stream coming from the Url into a string
+     */
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(is), 1000);
@@ -104,6 +117,9 @@ public class LoadFavorites extends AsyncTask<String, CityDisplay, ArrayList<City
         return sb.toString();
     }
 
+    /**
+     * If no city has been found, will make a informative message visible, invisible otherwise
+     */
     @Override
     protected void onPostExecute(ArrayList<CityDisplay> results) {
         TextView listEmpty = listEmptyRef.get();

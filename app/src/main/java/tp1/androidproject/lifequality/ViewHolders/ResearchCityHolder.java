@@ -19,15 +19,19 @@ import tp1.androidproject.lifequality.Model.CityDisplay;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
-
+/**
+ * View Holder of the list of cities resulting from a saerch/favorite
+ */
 public class ResearchCityHolder extends GenericViewHolder<CityDisplay> {
     private ImageView locationImage;
-    //private CircleImageView locationImage;
     private CardView cardView;
     private TextView locationFullname;
     private LinearLayout layout;
     private String cityUrl;
 
+    /**
+     * Retrieve graphical elements linked to this view (= one item of the list of cities)
+     */
     public ResearchCityHolder(@NonNull View itemView) {
         super(itemView);
         locationImage = itemView.findViewById(R.id.image_location);
@@ -36,6 +40,9 @@ public class ResearchCityHolder extends GenericViewHolder<CityDisplay> {
         cardView = itemView.findViewById(R.id.card_view);
     }
 
+    /**
+     * Override display to describe its specific display behavior
+     */
     @Override
     public void display(int position, ArrayList<CityDisplay> resultItems, final Context context){
         final CityDisplay item = resultItems.get(position);

@@ -16,11 +16,17 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+/**
+ * Fragment of the Urban Area (UA) description : Scores of the UA
+ * Inflated when the info have been loaded
+ * Visible when the card view, i.e. its container is clicked
+ * Charge the recycler that it contains
+ */
 
 public class ScoresUaFragment extends Fragment {
     private ArrayList<Score> scores;
 
-    public ScoresUaFragment(ArrayList<Score> scores) {
+    ScoresUaFragment(ArrayList<Score> scores) {
         this.scores = scores;
     }
 

@@ -24,6 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import tp1.androidproject.lifequality.Utils.Constants;
 import tp1.androidproject.lifequality.Model.CityDisplay;
 
+/**
+ * Class extending AsynTask
+ * Responsible for the loading of searched cities information and retrieving of pictures from flickr
+ */
 public class LoadResearch extends AsyncTask<String, CityDisplay, ArrayList<CityDisplay>> {
     private String searchUrl;
     private WeakReference<RecyclerView> listCitiesRef;
@@ -32,8 +36,7 @@ public class LoadResearch extends AsyncTask<String, CityDisplay, ArrayList<CityD
     private RecyclerView listCities;
     private RecyclerViewAdapter<CityDisplay> myAdapter;
 
-    public LoadResearch(WeakReference<RecyclerView> rvRef, String userInput, WeakReference<Context> contextRef,
-                        WeakReference<TextView> wrongResearchRef){
+    public LoadResearch(WeakReference<RecyclerView> rvRef, String userInput, WeakReference<Context> contextRef, WeakReference<TextView> wrongResearchRef){
         this.listCitiesRef = rvRef;
         this.searchUrl = Constants.UrlCitySearch+userInput;
         this.contextRef = contextRef;
@@ -49,12 +52,20 @@ public class LoadResearch extends AsyncTask<String, CityDisplay, ArrayList<CityD
         wrongResearchRef.get().setVisibility(View.GONE);
     }
 
+    /**
+     * Display each time a city is fully loaded
+     */
     @Override
     protected void onProgressUpdate(CityDisplay... results){
         myAdapter.add(results[0]);
         myAdapter.notifyItemInserted(myAdapter.getResultItems().size()-1);
     }
 
+    /**
+     * Get the string result of the request
+     * Convert it into JSon Object
+     * Go through the JSON to retrieve the necessary information
+     */
     @Override
     protected ArrayList<CityDisplay> doInBackground(String... strings) {
         URL url;
@@ -93,12 +104,15 @@ public class LoadResearch extends AsyncTask<String, CityDisplay, ArrayList<CityD
         return null;
     }
 
+    /**
+     * Get the picture from Flickr with the name of the city (plus its country and administrative division)
+     */
     private String retrieveImgUrl(String fullNameCity) {
         URL url;
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL("https://www.flickr.com/services/feeds/photos_public.gne?tags="+fullNameCity+"&format=json");
+            url = new URL(Constants.FLICKR_URL+fullNameCity+"&format=json");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setUseCaches(false);
             urlConnection.connect();
@@ -122,8 +136,9 @@ public class LoadResearch extends AsyncTask<String, CityDisplay, ArrayList<CityD
         return null;
     }
 
-
-
+    /**
+     * Transform the stream coming from the Url into a string
+     */
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
@@ -134,6 +149,9 @@ public class LoadResearch extends AsyncTask<String, CityDisplay, ArrayList<CityD
         return sb.toString();
     }
 
+    /**
+     * If no city has been found, will make a informative message visible, invisible otherwise
+     */
     @Override
     protected void onPostExecute(ArrayList<CityDisplay> results){
         TextView wrongResearchTv = wrongResearchRef.get();

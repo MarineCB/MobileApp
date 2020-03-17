@@ -1,9 +1,12 @@
 package tp1.androidproject.lifequality.Model;
 
 import com.orm.SugarRecord;
-
 import org.decimal4j.util.DoubleRounder;
 
+/**
+ * Model of a Salary Object
+ * Persistent by extending SugarRecord
+ */
 public class Salary extends SugarRecord<Salary> {
     private String name;
     private Double percentile25;

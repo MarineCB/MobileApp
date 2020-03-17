@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import tp1.androidproject.lifequality.Model.Salary;
 import tp1.androidproject.lifequality.Model.UrbanArea;
 import tp1.androidproject.lifequality.R;
+import tp1.androidproject.lifequality.Utils.Constants;
 import tp1.androidproject.lifequality.VolleyController;
 
 import android.view.LayoutInflater;
@@ -27,6 +28,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Fragment of Urban Area description
+ * Inflated when the "see urban area" button has been clicked in the city page
+ */
+
 
 public class UrbanAreaFragment extends Fragment {
     private UrbanArea urbanArea;
@@ -43,11 +49,14 @@ public class UrbanAreaFragment extends Fragment {
 
     private View view;
 
-    public UrbanAreaFragment(String uaUrl) {
+    UrbanAreaFragment(String uaUrl) {
         this.urbanArea = new UrbanArea(uaUrl);
     }
 
 
+    /**
+     * Initialize its graphical elements and set listeners on the card view (fragments containers)
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,7 +96,11 @@ public class UrbanAreaFragment extends Fragment {
         return view;
     }
 
-    public void init(){
+    /**
+     * Start the request to the API through the VolleyController
+     * Retrieve the main information
+     */
+    private void init(){
         new Thread(){public void run() {
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, urbanArea.getUrl(), null,
                     new Response.Listener<JSONObject>() {
@@ -114,10 +127,12 @@ public class UrbanAreaFragment extends Fragment {
                     });
             controller.addToRequestQueue(req);
         }}.run();
-
-
     }
 
+    /**
+     * Retrieve the more complex information (salaries, scores...) or photo
+     * Store them in the UrbanArea object
+     */
     private void parallelizedSubCatRequests() {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, urbanArea.getUrl()+"images/", null,
                 new Response.Listener<JSONObject>() {
@@ -128,7 +143,6 @@ public class UrbanAreaFragment extends Fragment {
                             JSONArray images = response.getJSONArray("photos");
                             if(images != null && images.length()!= 0){
                                 String image = images.getJSONObject(0).getJSONObject("image").getString("web");
-                                urbanArea.setImageUrl(image);
                                 Glide.with(getContext()).load(image).into((ImageView)view.findViewById(R.id.ua_image));
                             }else{
                                 view.findViewById(R.id.ua_image).setVisibility(View.GONE);
@@ -141,7 +155,7 @@ public class UrbanAreaFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(getContext(), "Sorry, there has been an issue with the image...", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), Constants.ISSUE_DISPLAY_IMAGE, Toast.LENGTH_LONG).show();
                     }
                 });
         controller.addToRequestQueue(req);
@@ -169,7 +183,7 @@ public class UrbanAreaFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), Constants.ISSUE_DISPLAY, Toast.LENGTH_LONG).show();
                     }
         });
         controller.addToRequestQueue(req);
@@ -198,7 +212,7 @@ public class UrbanAreaFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), Constants.ISSUE_DISPLAY, Toast.LENGTH_LONG).show();
                     }
         });
         controller.addToRequestQueue(req);
@@ -230,14 +244,15 @@ public class UrbanAreaFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), Constants.ISSUE_DISPLAY, Toast.LENGTH_LONG).show();
                     }
                 });
         controller.addToRequestQueue(req);
-
-
     }
 
+    /**
+     * Display the basic information
+     */
     private void DisplayInfo(){
         nameUa.setText(urbanArea.getName());
         fullnameUa.setText(urbanArea.getFullname());
@@ -250,7 +265,10 @@ public class UrbanAreaFragment extends Fragment {
         }
     }
 
-    public void listCitiesClicked(){
+    /**
+     * Make the fragment containing the Cities of the UA visible
+     */
+    private void listCitiesClicked(){
         FragmentTransaction transactionCities = getActivity().getSupportFragmentManager().beginTransaction();
         if (!citiesFrag.isVisible()){
             transactionCities.show(citiesFrag);
@@ -260,7 +278,10 @@ public class UrbanAreaFragment extends Fragment {
         transactionCities.commit();
     }
 
-    public void listScoresClicked(){
+    /**
+     * Make the fragment containing the Scores of the UA visible
+     */
+    private void listScoresClicked(){
         FragmentTransaction transactionScores = getActivity().getSupportFragmentManager().beginTransaction();
         if (!scoresFrag.isVisible()){
             transactionScores.show(scoresFrag);
@@ -270,7 +291,10 @@ public class UrbanAreaFragment extends Fragment {
         transactionScores.commit();
     }
 
-    public void listSalariesClicked(){
+    /**
+     * Make the fragment containing the Salaries of the UA visible
+     */
+    private void listSalariesClicked(){
         FragmentTransaction transactionScores = getActivity().getSupportFragmentManager().beginTransaction();
         if (!salariesFrag.isVisible()){
             transactionScores.show(salariesFrag);

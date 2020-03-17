@@ -1,5 +1,8 @@
 package tp1.androidproject.lifequality.Model;
 
+/**
+ * Representation of the elements to display a city (ex in research or favorites)
+ */
 public class CityDisplay {
     private String fullName;
     private String imageUrl;

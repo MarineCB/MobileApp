@@ -16,10 +16,17 @@ import tp1.androidproject.lifequality.R;
 import tp1.androidproject.lifequality.RecyclerViewAdapter;
 
 
+/**
+ * Fragment of the Urban Area (UA) description : Salaries in the city
+ * Inflated when the info have been loaded
+ * Visible when the card view, i.e. its container is clicked
+ * Charge the recycler that it contains
+ */
+
 public class SalariesUaFragment extends Fragment {
     private ArrayList<Salary> salaries;
 
-    public SalariesUaFragment(ArrayList<Salary> salaries) {
+    SalariesUaFragment(ArrayList<Salary> salaries) {
         this.salaries = salaries;
     }
 

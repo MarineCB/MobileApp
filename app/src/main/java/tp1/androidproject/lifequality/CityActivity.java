@@ -9,8 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import tp1.androidproject.lifequality.Fragments.CityFragment;
 import tp1.androidproject.lifequality.Utils.BottomNavigationBar;
 
+/**
+ * Activity created when a city has been chosen (from search or favorites)
+ * First inflate the city fragament
+ * Can later one contain the urban area fragment or else
+ */
 public class CityActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

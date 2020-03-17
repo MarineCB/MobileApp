@@ -9,6 +9,7 @@ import tp1.androidproject.lifequality.Model.City;
 import tp1.androidproject.lifequality.Model.UrbanArea;
 import tp1.androidproject.lifequality.NotificationService;
 import tp1.androidproject.lifequality.R;
+import tp1.androidproject.lifequality.Utils.Constants;
 import tp1.androidproject.lifequality.VolleyController;
 
 import android.view.LayoutInflater;
@@ -41,7 +42,6 @@ public class CityFragment extends Fragment {
     private String cityUrl;
     private String imgUrl;
     private WeakReference<City> cityRef;
-    private City cityObj;
     private VolleyController controller;
     private TextView cityNameTv;
     private TextView populationTv;
@@ -49,6 +49,7 @@ public class CityFragment extends Fragment {
     private TextView adminDivTv;
     private TextView timezoneTv;
     private LikeButton likeButton;
+    private City cityObj;
 
     private View view;
 
@@ -62,7 +63,10 @@ public class CityFragment extends Fragment {
         this.imgUrl = imageUrl;
     }
 
-
+    /**
+     * Initialize graphic components
+     * Start the repetitive service thanks to sheduleJob method of NotificationService
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_city, container, false);
@@ -78,7 +82,7 @@ public class CityFragment extends Fragment {
         view.findViewById(R.id.ua_act_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LaunchUrbanActivity(v);
+                LaunchUrbanAreaFrag();
             }
         });
 
@@ -101,7 +105,9 @@ public class CityFragment extends Fragment {
     }
 
 
-
+    /**
+     * Set the listener of the like button to enable data persistence : cities are saved or deleted
+     */
 
     public void Initialize(){
         likeButton.setOnLikeListener(new OnLikeListener() {
@@ -127,11 +133,14 @@ public class CityFragment extends Fragment {
                 }
             }
         });
-
-        controller = VolleyController.getInstance(getContext());
     }
 
+    /**
+     * Start request to retrieve the city information from the API
+     * Use Volley through the VolleyController
+     */
     private void startRequest () {
+        controller = VolleyController.getInstance(getContext());
         new Thread(){public void run() {
             final City city = cityRef.get();
 
@@ -150,11 +159,9 @@ public class CityFragment extends Fragment {
 
                                 JSONObject values = response.getJSONObject("city:admin1_division");
                                 city.setAdminDivision(values.getString("name"));
-                                city.setAdminDivisionUrl(values.getString("href"));
 
                                 values = response.getJSONObject("city:country");
                                 city.setCountry(values.getString("name"));
-                                city.setCountryUrl(values.getString("href"));
 
                                 values = response.getJSONObject("city:timezone");
                                 city.setTimezone(values.getString("name"));
@@ -176,13 +183,17 @@ public class CityFragment extends Fragment {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getContext(), "Sorry, there has been an issue...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), Constants.ISSUE_DISPLAY, Toast.LENGTH_LONG).show();
                         }
                     });
             controller.addToRequestQueue(req);
         }}.run();
     }
 
+    /**
+     * Display the information retrieved by the request
+     * Initialize the like button : selectionned if the city is already saved not selectionned otherwise
+     */
     private void DisplayInfo(City city){
         populationTv.setText(city.getPopulation());
         cityNameTv.setText(city.getName());
@@ -200,7 +211,11 @@ public class CityFragment extends Fragment {
             likeButton.setLiked(false);
     }
 
-    public void LaunchUrbanActivity(View v) {
+    /**
+     * Inflate the fragment of the Urban Area and replace the current by this one
+     * Convey the URL of the UA in question
+     */
+    private void LaunchUrbanAreaFrag() {
         UrbanAreaFragment frag = new UrbanAreaFragment(cityRef.get().getUrbanArea().getUrl());
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
     }

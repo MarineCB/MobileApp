@@ -15,12 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import tp1.androidproject.lifequality.LoadResearch;
 import tp1.androidproject.lifequality.R;
 
+/**
+ * Fragment of the Urban Area (UA) description : cities composing the UA
+ * Inflated when the cities have been loaded
+ * Visible when the card view, i.e. its container is clicked
+ * Charge the recycler that it contains
+ */
+
 public class SearchFragment extends Fragment {
     private View view;
 
     public SearchFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +36,10 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Initialize the SearchView et set the listener
+     * Will start the search of the user's query through the LoadResearch class when the query is submitted
+     */
     private void init(final RecyclerView citiesList){
         SearchView searchArea = view.findViewById(R.id.location_search);
         searchArea.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

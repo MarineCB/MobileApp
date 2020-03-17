@@ -12,6 +12,12 @@ import tp1.androidproject.lifequality.Fragments.SearchFragment;
 import tp1.androidproject.lifequality.Fragments.SettingsFragment;
 import tp1.androidproject.lifequality.R;
 
+
+/**
+ * Regroup all initalization and use of the bottom navigation bar
+ * Prevent from code duplication to initalize the component and its listener
+ * Declare the behavior when an icon is clicked
+ */
 public class BottomNavigationBar {
     
     public static void initializeBottomNavBar(final AppCompatActivity act, final BottomNavigationView bar, final int idSelected){

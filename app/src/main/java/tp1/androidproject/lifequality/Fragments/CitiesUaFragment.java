@@ -18,12 +18,13 @@ import tp1.androidproject.lifequality.RecyclerViewAdapter;
  * Fragment of the Urban Area (UA) description : cities composing the UA
  * Inflated when the cities have been loaded
  * Visible when the card view, i.e. its container is clicked
+ * Charge the recycler that it contains
  */
 
 public class CitiesUaFragment extends Fragment {
     private ArrayList<String> cities;
 
-    public CitiesUaFragment(ArrayList<String> cities) {
+    CitiesUaFragment(ArrayList<String> cities) {
         this.cities = cities;
     }
 

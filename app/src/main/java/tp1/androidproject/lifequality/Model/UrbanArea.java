@@ -4,19 +4,18 @@ import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 
+/**
+ * Model of a UrbanArea Object
+ * Persistent by extending SugarRecord
+ */
 public class UrbanArea extends SugarRecord<UrbanArea> {
     private String url;
     private String name;
     private String fullname;
-    private ArrayList<String> adminDivisions;
     private String mayor;
     private ArrayList<String> cities;
     private String continent;
-    private String country;
-    private String detailsUrl;
-    private String salariesUrl;
     private ArrayList<Salary> salaries;
-    private String imageUrl;
     private ArrayList<Score> scores;
 
 
@@ -26,7 +25,6 @@ public class UrbanArea extends SugarRecord<UrbanArea> {
         this.cities = new ArrayList<>();
         this.salaries = new ArrayList<>();
     }
-
 
     public String getUrl() {
         return url;
@@ -56,14 +54,6 @@ public class UrbanArea extends SugarRecord<UrbanArea> {
         this.fullname = fullname;
     }
 
-    public ArrayList<String> getAdminDivisions() {
-        return adminDivisions;
-    }
-
-    public void setAdminDivisions(ArrayList<String> adminDivisions) {
-        this.adminDivisions = adminDivisions;
-    }
-
     public String getMayor() {
         return mayor;
     }
@@ -88,36 +78,11 @@ public class UrbanArea extends SugarRecord<UrbanArea> {
         this.continent = continent;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getDetailsUrl() {
-        return detailsUrl;
-    }
-
-    public void setDetailsUrl(String detailsUrl) {
-        this.detailsUrl = detailsUrl;
-    }
-
     public ArrayList<Salary> getSalaries() {
         return salaries;
     }
 
     public void addSalary(Salary salary){
         salaries.add(salary);
-    }
-
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 }

@@ -8,15 +8,20 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import tp1.androidproject.lifequality.Model.Salary;
-import tp1.androidproject.lifequality.Model.Score;
 import tp1.androidproject.lifequality.R;
 
+/**
+ * View Holder of the list of salary of an urban area
+ */
 public class UrbanAreaSalariesHolder extends GenericViewHolder<Salary> {
     private TextView jobTitle;
     private TextView percentile25;
     private TextView percentile50;
     private TextView percentile75;
 
+    /**
+     * Retrieve graphical elements linked to this view (= one item of the list of salaries)
+     */
     public UrbanAreaSalariesHolder(@NonNull View itemView) {
         super(itemView);
         this.jobTitle = itemView.findViewById(R.id.job_title);
@@ -25,6 +30,9 @@ public class UrbanAreaSalariesHolder extends GenericViewHolder<Salary> {
         this.percentile75 = itemView.findViewById(R.id.percentile_75);
     }
 
+    /**
+     * Override display to describe its specific display behavior
+     */
     @Override
     public void display(int position, ArrayList<Salary> salaries, Context context) {
         final Salary item = salaries.get(position);
